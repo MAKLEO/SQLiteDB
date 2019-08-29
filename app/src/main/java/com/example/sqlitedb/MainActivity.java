@@ -80,22 +80,89 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 shwmsg("Eroor","INVALID INPUT");
                 return;
                 }
+                sqLiteDatabase.execSQL("INSERT INTO student VALUES('"+editTextRollno.getText()+"'," +
+                        "'"+editTextName.getText()+"','"+editTextMarks.getText()+"';)");
+                shwmsg("SUCCESS","Record added");
                 clearText();
                 break;
             case R.id.buttonDelete:
-                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+                if(editTextRollno.getText().toString().trim().length()==0)
+                {
+                    shwmsg("Error", "Please enter Rollno");
+                    return;
+                }
+                Cursor c=sqLiteDatabase.rawQuery("SELECT * FROM student WHERE rollno='"+editTextRollno.getText()+"'", null);
+                if(c.moveToFirst())
+                {
+                    sqLiteDatabase.execSQL("DELETE FROM student WHERE rollno='"+editTextRollno.getText()+"'");
+                    shwmsg("Success", "Record Deleted");
+                }
+                else
+                {
+                    shwmsg("Error", "Invalid Rollno");
+                }
+                clearText();
+            Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.buttonModify:
+                if(editTextRollno.getText().toString().trim().length()==0)
+                {
+                    shwmsg("Error", "Please enter Rollno");
+                    return;
+                }
+                Cursor c1=sqLiteDatabase.rawQuery("SELECT * FROM student WHERE rollno='"+editTextRollno.getText()+"'", null);
+                if(c1.moveToFirst())
+                {
+                    sqLiteDatabase.execSQL("UPDATE student SET name='"+editTextName.getText()+"',marks='"+editTextMarks.getText()+
+                            "' WHERE rollno='"+editTextRollno.getText()+"'");
+                    shwmsg("Success", "Record Modified");
+                }
+                else
+                {
+                    shwmsg("Error", "Invalid Rollno");
+                }
+                clearText();
                 Toast.makeText(this, "Modify", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.buttonView:
+                if(editTextRollno.getText().toString().trim().length()==0)
+                {
+                    shwmsg("Error", "Please enter Rollno");
+                    return;
+                }
+                Cursor c2=sqLiteDatabase.rawQuery("SELECT * FROM student WHERE rollno='"+editTextRollno.getText()+"'", null);
+                if(c2.moveToFirst())
+                {
+                    editTextName.setText(c2.getString(1));
+                    editTextMarks.setText(c2.getString(2));
+                }
+                else
+                {
+                    shwmsg("Error", "Invalid Rollno");
+                    clearText();
+                }
                 Toast.makeText(this, "View", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.buttonViewall:
+                Cursor c3=sqLiteDatabase.rawQuery("SELECT * FROM student", null);
+                if(c3.getCount()==0)
+                {
+                    shwmsg("Error", "No records found");
+                    return;
+                }
+                StringBuffer buffer=new StringBuffer();
+                while(c3.moveToNext())
+                {
+                    buffer.append("Rollno: "+c3.getString(0)+"\n");
+                    buffer.append("Name: "+c3.getString(1)+"\n");
+                    buffer.append("Marks: "+c3.getString(2)+"\n\n");
+                }
+                shwmsg("Student Details", buffer.toString());
                 Toast.makeText(this, "AllView", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.buttonshow:
                 Toast.makeText(this, "Show", Toast.LENGTH_SHORT).show();
+                shwmsg("Developed By-","ms. Vaishnavi Hava");
                 break;
         }
     }
