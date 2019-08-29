@@ -63,26 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //            }
 //        }
-
-
-
-
-
-
-
-
         switch (view.getId()){
             case R.id.buttonAdd:
                 if(editTextRollno.getText().toString().trim().length()==0||
                         editTextName.getText().toString().trim().length()==0||
-                        editTextMarks.getText().toString().trim().length()==0){
-                Toast.makeText(this, "INVALID INPUT", Toast.LENGTH_SHORT).show();
-                shwmsg("Eroor","INVALID INPUT");
-                return;
+                        editTextMarks.getText().toString().trim().length()==0)
+                {
+                    Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
+                    shwmsg("Error", "Please enter all values");
+                    return;
                 }
-                sqLiteDatabase.execSQL("INSERT INTO student VALUES('"+editTextRollno.getText()+"'," +
-                        "'"+editTextName.getText()+"','"+editTextMarks.getText()+"';)");
-                shwmsg("SUCCESS","Record added");
+                sqLiteDatabase.execSQL("INSERT INTO student VALUES('"+editTextRollno.getText()+"','"+editTextName.getText()+
+                        "','"+editTextMarks.getText()+"');");
+                shwmsg("Success", "Record added");
                 clearText();
                 break;
             case R.id.buttonDelete:
@@ -141,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     shwmsg("Error", "Invalid Rollno");
                     clearText();
                 }
-                Toast.makeText(this, "View", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "View", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.buttonViewall:
                 Cursor c3=sqLiteDatabase.rawQuery("SELECT * FROM student", null);
