@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="Setting" />
-    <item android:title="Waiting" />
+    <item
+        android:id="@+id/Set"
+        android:title="Setting"
+        app:showAsAction="never"
+        android:orderInCategory="100"
+        />
+    <item
+        android:id="@+id/wait"
+        android:title="Waiting"
+        app:showAsAction="never"
+        android:orderInCategory="100"
+        />
 </menu>

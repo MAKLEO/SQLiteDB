@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -180,4 +181,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //    private void showMessage(String error, String please_enter_all_values) {
 //    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
 }
